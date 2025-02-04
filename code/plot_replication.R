@@ -276,7 +276,7 @@ meta_analysis <- function(data,n1,n2){
   
   data$tempZ1 = qnorm(data$P1/ 2) * sign(data$Z1)
   data$tempZ2 = qnorm(data$P2/ 2) * sign(data$Z2)
-  data$Z_meta = (data$tempZ1*w1 + data$tempZ2*w2)/sqrt(w1^2 + w1^2)
+  data$Z_meta = (data$tempZ1*w1 + data$tempZ2*w2)/sqrt(w1^2 + w2^2)
   data$P_meta =2*pnorm(abs(-data$Z_meta), lower.tail=FALSE)
   return(data)
 }
