@@ -5,7 +5,7 @@
 # setwd("/path/to/csmGmm_reproduce/Fig1/Fig1A_sim.R") or set the path after the -cwd flag
 # in the .lsf file, and then run again.
 setwd("/rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung")
-here::i_am("Lung/replication_lung.R")
+here::i_am("Lung/three_rep_overall.R")
 
 # load libraries
 library(data.table)
