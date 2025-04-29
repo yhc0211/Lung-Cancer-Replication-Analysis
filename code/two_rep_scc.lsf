@@ -1,0 +1,14 @@
+#BSUB -J two_rep_scc[1-3]
+#BSUB -W 6:00
+#BSUB -o /rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung/errDir/two_rep_scc_log%I.out
+#BSUB -e /rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung/errDir/two_rep_scc_%I.err
+#BSUB –cwd /rsrch8/home/epi/ychang11/csmGmm_reproduce/
+#BSUB -q medium
+#BSUB -u ychang11@mdanderson.org
+#BSUB -n 1
+#BSUB -M 64
+#BSUB -R rusage[mem=64]
+
+# run 1-3
+module load R/4.3.1
+Rscript /rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung/two_rep_scc.R $LSB_JOBINDEX 1 >/rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung/errDir/two_rep_scc_$LSB_JOBINDEX.out

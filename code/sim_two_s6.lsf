@@ -1,0 +1,14 @@
+#BSUB -J sim_two_s6[1-100]
+#BSUB -W 8:00
+#BSUB -o /rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung/errDir/sim_two_s6_log%I.out
+#BSUB -e /rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung/errDir/sim_two_s6_%I.err
+#BSUB –cwd /rsrch8/home/epi/ychang11/csmGmm_reproduce/
+#BSUB -q medium
+#BSUB -u ychang11@mdanderson.org
+#BSUB -n 1
+#BSUB -M 64
+#BSUB -R rusage[mem=64]
+
+# run 100 simulations
+module load R/4.3.1
+Rscript /rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung/sim_two.R $LSB_JOBINDEX 6 >/rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung/errDir/sim_two_s6_$LSB_JOBINDEX.out
