@@ -1,3 +1,3 @@
 # Introduction
 
-Code to produce replication analysis for lung cancer.
+Code to produce a model-based replication analysis for lung cancer GWAS summary statistics.
