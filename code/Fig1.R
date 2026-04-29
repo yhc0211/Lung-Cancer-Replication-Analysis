@@ -1,11 +1,11 @@
-# Make Fig2 - power and fdp plot for different mean and number of causal
+# Make Fig1 - power and fdp plot for different mean and number of causal
 
 # Using the here package to manage file paths. If an error is thrown, please
 # set the working directory to the folder that holds this Rscript, e.g.
 # setwd("/path/to/csmGmm_reproduce/Fig4/plot_data_analysis.R") or set the path after the -cwd flag
 # in the .lsf file, and then run again.
 setwd("csmGmm_reproduce/Lung")
-here::i_am("Lung/Fig2.R")
+here::i_am("Lung/Fig1.R")
 
 library(dplyr)
 library(magrittr)
@@ -46,7 +46,7 @@ mycols[5] <- "blue"
 mycols[7] <- "black"
 mycols[8] <- "purple"
 
-sim_results <- fread(paste0(outputDir, "/rep_three_sim_Snum", 1, "_aID", 1, ".txt")) %>%
+sim_results <- fread(paste0(outputDir, "/rep_two_sim_Snum", 1, "_aID", 1, ".txt")) %>%
   dplyr::select(
     nCausal, propCausal, mu,
     powerNew, powerMeta, powerMetaBH, powerRepfdr, powerMamba,
@@ -58,7 +58,7 @@ sim_results <- fread(paste0(outputDir, "/rep_three_sim_Snum", 1, "_aID", 1, ".tx
 
 for (Snum in 1:15) {
   for (aID in 1:100) {
-    tempResults <- fread(paste0(outputDir, "/rep_three_sim_Snum", Snum, "_aID", aID, ".txt")) %>%
+    tempResults <- fread(paste0(outputDir, "/rep_two_sim_Snum", Snum, "_aID", aID, ".txt")) %>%
       dplyr::select(
         nCausal, propCausal, mu,
         powerNew, powerMeta, powerMetaBH, powerRepfdr, powerMamba,
@@ -259,7 +259,7 @@ fig1f <- plot_func(data = sim_results,pCausal = 0.01, type = "Power")
 
 
 mergePlot <- ggarrange(fig1a, fig1b,fig1c,fig1d,fig1e,fig1f , ncol=2, nrow=3, common.legend = TRUE, legend="bottom",labels = c("A","B","C","D","E","F"))
-ggsave(paste0(outputDir_Fig,"/Fig2_revised.pdf"), plot = mergePlot, width = 14,
+ggsave(paste0(outputDir_Fig,"/Fig1_revised.pdf"), plot = mergePlot, width = 14,
        height = 9)
 
 plot_incon_func <- function(data, pCausal) {
@@ -314,60 +314,60 @@ plot_incon_func <- function(data, pCausal) {
     "repfdr"
   )
   
-  
-  plotDat <- final_result %>%
-    dplyr::select(
-      mu, inconNew, inconRepfdr
-    ) %>%
-    dplyr::rename(
-      "Replication Analysis"      = inconNew,
-      "repfdr"                    = inconRepfdr
-    ) %>%
-    tidyr::pivot_longer(
-      cols = -mu,
-      names_to = "Method",
-      values_to = "Value"
-    )
-  
-  ylab_text <- "Num Incongruous"
-  
-  plot1 <- ggplot(plotDat, aes(x = mu, y = Value, color = Method, linetype = Method)) +
-    geom_line(linewidth = 0.5) +
-    ylab(ylab_text) +
-    xlab("Mean Effect Size") +
-    ylim(0, 100) +
-    xlim(2, 6) +
-    scale_color_manual(
-      values = color_map,
-      breaks = method_order,
-      labels = legend_labels
-    ) +
-    scale_linetype_manual(
-      values = linetype_map,
-      breaks = method_order,
-      labels = legend_labels
-    ) +
-    theme_cowplot() +
-    theme(
-      axis.title = element_text(size = 14),
-      axis.text = element_text(size = 14),
-      legend.title = element_text(size = 14),
-      legend.text = element_text(size = 14),
-      legend.key.size = unit(1.2, "line")
-    ) +
-    ggtitle(
-      paste(
-        "Proportion of Causal Variants is",
-        format(pCausal * 100, scientific = FALSE),
-        "%"
+
+    plotDat <- final_result %>%
+      dplyr::select(
+        mu, inconNew, inconRepfdr
+      ) %>%
+      dplyr::rename(
+        "Replication Analysis"      = inconNew,
+        "repfdr"                    = inconRepfdr
+      ) %>%
+      tidyr::pivot_longer(
+        cols = -mu,
+        names_to = "Method",
+        values_to = "Value"
       )
-    )
-  
-  
+    
+    ylab_text <- "Num Incongruous"
+    
+    plot1 <- ggplot(plotDat, aes(x = mu, y = Value, color = Method, linetype = Method)) +
+      geom_line(linewidth = 0.5) +
+      ylab(ylab_text) +
+      xlab("Mean Effect Size") +
+      ylim(0, 10) +
+      xlim(2, 6) +
+      scale_color_manual(
+        values = color_map,
+        breaks = method_order,
+        labels = legend_labels
+      ) +
+      scale_linetype_manual(
+        values = linetype_map,
+        breaks = method_order,
+        labels = legend_labels
+      ) +
+      theme_cowplot() +
+      theme(
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 14),
+        legend.title = element_text(size = 14),
+        legend.text = element_text(size = 14),
+        legend.key.size = unit(1.2, "line")
+      ) +
+      ggtitle(
+        paste(
+          "Proportion of Causal Variants is",
+          format(pCausal * 100, scientific = FALSE),
+          "%"
+        )
+      )
+    
+ 
 }
 figa <- plot_incon_func(data = sim_results,pCausal = 0.0002)
 figb <- plot_incon_func(data = sim_results,pCausal = 0.002)
 figc <- plot_incon_func(data = sim_results,pCausal = 0.01)
 mergePlot_incon <- ggarrange(figa, figb,figc, ncol=1, nrow=3, common.legend = TRUE, legend="bottom",labels = c("A","B","C"))
-ggsave(paste0(outputDir_Fig,"/Fig2_incon_revised.pdf"), plot = mergePlot_incon, width = 14,
+ggsave(paste0(outputDir_Fig,"/Fig1_incon_revised.pdf"), plot = mergePlot_incon, width = 14,
        height = 9)
