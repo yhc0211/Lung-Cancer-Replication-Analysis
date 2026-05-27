@@ -10,7 +10,7 @@ This folder contains the analysis code for the lung cancer replication analysis 
 The code is organized into two main components:
 
 1. `Simulation/`: simulation studies comparing the proposed replication method with competing approaches.
-2. `Real data/`: real lung cancer GWAS analyses, including two-cohort and three-cohort replication analyses, `repfdr` comparisons, incongruity checks, PRS analyses, and FAVOR annotation analyses.
+2. `Real data/`: real lung cancer GWAS analyses, including two-cohort and three-cohort replication analyses, `repfdr` and kernel method comparisons, incongruity checks, PRS analyses, and FAVOR annotation analyses.
 
 ---
 
@@ -74,3 +74,41 @@ code/
         ├── two_repfdr_overall.lsf
         ├── two_repfdr_scc.R
         └── two_repfdr_scc.lsf
+```
+## Analysis Workflow
+
+- **Run simulation studies**
+  - `Simulation/sim_two.R`: runs the two-cohort simulation study.
+  - `Simulation/sim_three.R`: runs the three-cohort simulation study.
+
+- **Summarize simulation results**
+  - `Simulation/plot_simulation.R`: aggregates simulation outputs and generates simulation summary figures/tables.
+
+- **Run two-cohort real-data replication analyses**
+  - `Real data/two cohort/two_rep_overall.R`: overall lung cancer analysis.
+  - `Real data/two cohort/two_rep_adeno.R`: lung adenocarcinoma analysis.
+  - `Real data/two cohort/two_rep_scc.R`: lung squamous cell carcinoma analysis.
+
+- **Run three-cohort real-data replication analyses**
+  - `Real data/three cohort/three_rep_overall.R`: overall lung cancer analysis.
+  - `Real data/three cohort/three_rep_adeno.R`: lung adenocarcinoma analysis.
+  - `Real data/three cohort/three_rep_scc.R`: lung squamous cell carcinoma analysis.
+
+- **Run comparison analyses using `repfdr`**
+  - `two_repfdr_*.R`: applies `repfdr` & kernel method in the two-cohort setting.
+  - `three_repfdr_*.R`: applies `repfdr` & kernel method in the three-cohort setting.
+
+- **Check incongruous SNP ranking patterns**
+  - `two_incon_overall.R`: checks incongruity in the two-cohort overall lung cancer analysis.
+  - `three_incon_overall.R`: checks incongruity in the three-cohort overall lung cancer analysis.
+  - `three_incon_adeno_scc.R`: checks incongruity in subtype-specific three-cohort analyses.
+
+- **Generate final real-data figures and tables**
+  - `plot_two_rep.R`: generates two-cohort real-data result summaries.
+  - `plot_three_rep.R`: generates three-cohort real-data result summaries.
+
+- **Run downstream PRS analysis**
+  - Scripts in `Real data/PRS/` run PRSice and summarize polygenic risk score results.
+
+- **Run FAVOR annotation visualization**
+  - Scripts in `Real data/FAVOR/` generate functional annotation plots for selected SNPs.
