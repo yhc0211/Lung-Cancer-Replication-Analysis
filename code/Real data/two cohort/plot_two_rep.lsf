@@ -1,0 +1,14 @@
+#BSUB -J plot_two_rep[1-3]
+#BSUB -W 5:00
+#BSUB -o /rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung/errDir/plot_two_rep_log%I.out
+#BSUB -e /rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung/errDir/plot_two_rep_%I.err
+#BSUB –cwd /rsrch8/home/epi/ychang11/csmGmm_reproduce/
+#BSUB -q medium
+#BSUB -u ychang11@mdanderson.org
+#BSUB -n 1
+#BSUB -M 50
+#BSUB -R rusage[mem=50]
+
+# run 1-3 (pairs)
+module load R/4.4.1
+Rscript /rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung/plot_two_rep.R $LSB_JOBINDEX 1 >/rsrch8/home/epi/ychang11/csmGmm_reproduce/Lung/errDir/plot_two_rep_$LSB_JOBINDEX.out
